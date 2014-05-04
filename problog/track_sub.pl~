@@ -1,0 +1,46 @@
+%%% incluir la BD extensional de puntos
+:-consult(points).
+
+%just a test
+point(203,144,2,1250).
+
+%%%  Predicado ground que especifica el punto semilla
+seed(203,143,0).
+
+%  Predicados que indican que un punto esta en el camino generado por un punto
+%  semilla. De esta forma:
+%  1:00 si es el punto semilla
+%  0.99 si está directamente debajo
+%  0.80 si está movido una posicion en x o en y del punto directamente debajo
+%  0.65 si está movido tanto en x como en y una posición del punto directamente debajo
+
+1.00::route(X,Y,Z) <- point(X,Y,Z,I), seed(X,Y,Z).
+0.99::route(X,Y,Z) <- point(X,Y,Z,I), Z > 0, T is Z-1, route(X,Y,T).
+
+0.80::route(X,Y,Z) <- point(X,Y,Z,I), Z > 0, Y > 0, T is Z-1, D is Y-1 , route(X,D,T).
+0.80::route(X,Y,Z) <- point(X,Y,Z,I), Z > 0, Y > 0, T is Z-1, D is Y+1 , route(X,D,T).
+%AQUI ELIMINE LOS OTROS PREDICADOS SOLO PARA CONCENTRARME EN LA PRUEBA SOBRE Y
+
+prueba1(X,Y,Z) :-  point(X,Y,Z,I).
+0.90::prueba2(X,Y,Z) <- point(X,Y,Z,I).
+
+%%%%%%%%%% consultas
+
+%query(route(203,_,_)). 
+%RESULT: track_sub {'route(203,143,1)': 0.99, 'route(203,142,1)': 0.8, 'route(203,144,1)': 0.8, 'route(203,144,2)': 0.956736, 'route(203,143,0)': 1.0}
+
+%query(route(_,143,_)). 
+%RESULT: track_sub {'route(203,143,0)': 1.0, 'route(203,143,1)': 0.99}
+% AL FIJAR Y SALEN DEL SET LOS OTROS 2 RESULTADO Y \= 143
+
+%query(route(_,_,1)). 
+%da error, pero 
+
+query(prueba1(_,_,1)). 
+%std::bad_alloc
+
+%query(prueba2(_,_,1)). 
+%std::bad_alloc
+
+%query(route(_,_,_)). 
+%no termina
