@@ -14,3 +14,14 @@
 %%%
 %%%%%%
 
+%%% Include extensional DB of points
+%%% point(X,Y,Z,I) predicate 
+%%%   X,Y,Z : should instantiate integers corresponding to XYZ coordinate in space
+%%%   I     : should instantiate integer corresponding intensity value at XYZ point
+:-consult(points).
+
+%%% Include extensional DB of points to be known inside the tube
+%%% known(X,Y,Z) predicate 
+%%%   X,Y,Z : should instantiate integers corresponding to XYZ coordinate in space
+
+:-consult(known).
