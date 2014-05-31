@@ -6,7 +6,7 @@
 %%%  Desc:    Main inference file. Calculates centerline path of a round tubular
 %%%           structure described by "points" truth values. Values should be 
 %%%           "inrange" to be considered inside the tube. path is calculated by 
-%%%           means of "ruote" predicate starting from a "seed" point 
+%%%           means of "route" predicate starting from a "seed" point 
 %%%
 %%%  Author:  Alexander Baranya - 2014
 %%%           

@@ -1,0 +1,20 @@
+%%%%%%
+%%%
+%%%  Project: Anise 
+%%%  Sub:     reduce.pl 
+%%%
+%%%  Desc:    Inference file. Produces the set of points that follow a track around
+%%%           an specified radix.
+%%%
+%%%  Author:  Alexander Baranya - 2014
+%%%           
+%%%
+%%%%%%
+
+%%% Load the set of points.
+
+%%% Load the track
+
+%%% Specify the radix
+radix(28).
+
