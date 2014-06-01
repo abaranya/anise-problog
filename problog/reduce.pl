@@ -22,17 +22,21 @@
 %%% Now fixed Ri = 28
 radix(_,28).
 
+%%%
+euclid(X1,X2,Y1,Y2,D):- D is sqrt(abs(X1-X2)**2 + abs(Y1-Y2)**2).
+
 %%% Calculates 
-inside(X1,X2,Z):- radix(Z,R), X1 => X2 - R , X1 =< X2 + R. 
+inside(X,Y,Z):- radix(Z,R), vessel_track(X1,Y1,Z), euclid(X,X1,Y,Y1,D), D =< R. 
 
 %%% Just for testing
-tpoint(X,Y,Z):- point(X,Y,0)
+tpoint(X,Y,Z):- point(X,Y,Z)
 
 
 %%%
 rpoint(X,Y,Z):-tpoint(X,Y,Z), vessel_track(X,Y,Z).
-rpoint(X,Y,Z):-tpoint(X,Y,Z), inside(X1,X,Z), vessel_track(X,_,Z).
+rpoint(X,Y,Z):-tpoint(X,Y,Z), inside(X,Y,Z).
 
 
 %%%
+query(rpoint(X,Y,0)).
 query(rpoint(X,Y,Z)).
