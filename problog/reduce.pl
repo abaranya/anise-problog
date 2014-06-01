@@ -29,11 +29,11 @@ euclid(X1,X2,Y1,Y2,D):- D is sqrt(abs(X1-X2)**2 + abs(Y1-Y2)**2).
 inside(X,Y,Z):- radix(Z,R), vessel_track(X1,Y1,Z), euclid(X,X1,Y,Y1,D), D =< R. 
 
 %%% Just for testing
-tpoint(X,Y,Z):- point(X,Y,Z,_).  %Shouldn't be more than 1 intensity value I per point
+%tpoint(X,Y,Z):- point(X,Y,Z,_).  %Shouldn't be more than 1 intensity value I per point
 
 
 %%%
-rpoint(X,Y,Z):-tpoint(X,Y,Z), vessel_track(X,Y,Z).
-rpoint(X,Y,Z):-tpoint(X,Y,Z), inside(X,Y,Z).
+rpoint(X,Y,Z,I):-point(X,Y,Z,I), vessel_track(X,Y,Z).
+rpoint(X,Y,Z,I):-point(X,Y,Z,I), inside(X,Y,Z).
 
-
+ 

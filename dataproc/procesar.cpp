@@ -81,7 +81,7 @@ void procesar(int dimx, int dimy, int dimz, char *archivo_lectura,
 
 //Ejemplo de un main para procesar un archivo.
 int main(){
-	char archivo_lectura[200]="spm00_256x256x768.raw";
+	char archivo_lectura[200]="../raw-file/spm00_256x256x768.raw";
 	char archivo_escritura[200]="salida2";
 	char prefijo[200]="point";
 	char sufijo[200]=".\n";
