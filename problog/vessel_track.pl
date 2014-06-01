@@ -6,7 +6,7 @@
 %%%  Desc:    Temporary testing file. Provides points to be know as part of a 
 %%%           round tubular structure described by "vessel_track" truth values. 
 %%%
-%%%  Author:  Alexander Baranya - 2014
+%%%  Author:  Alexander Baranya (abaranya@gmail.com) - 2014
 %%%           
 %%%
 %%%%%%

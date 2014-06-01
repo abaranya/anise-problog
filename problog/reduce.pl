@@ -6,7 +6,7 @@
 %%%  Desc:    Inference file. Produces the set of points that follow a track around
 %%%           an specified radix.
 %%%
-%%%  Author:  Alexander Baranya - 2014
+%%%  Author:  Alexander Baranya (abaranya@gmail.com ) - 2014
 %%%           
 %%%
 %%%%%%
