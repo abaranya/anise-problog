@@ -9,7 +9,7 @@
 %%%           means of "ruote" predicate starting from a "seed" point that stablish 
 %%%           some point inside a given slide of the volume.
 %%%
-%%%  Author:  Alexander Baranya (abaranya@gmail.com) - 2014
+%%%  Author:  Alexander Baranya (abaranya@gmail.com) - 2014, 2015
 %%%           
 %%%
 %%%%%%
