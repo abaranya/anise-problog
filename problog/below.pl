@@ -31,7 +31,13 @@ point(2,1,4,100).
 %%%   
 
 seed(1,1,1).
+seed(3,1,1).
 
-someseed :- seed(1,1,1).
+firstseed(X,Y,Z) :- seed(X,Y,Z).
 
-query(someseed).
+1.0::anyseed(X) :- seed(X,1,1).
+%0.7::anyseed(X) :- firstseed(X,1,1).
+
+
+query(anyseed(2)).
+query(anyseed(1)).
