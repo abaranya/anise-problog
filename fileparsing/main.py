@@ -10,6 +10,8 @@ def main(argv):
     # todo: process some input parameters
     inputproc = InputProc('Parse Problog Output for centerline calculations')
 
+    inputproc.printhelp()
+
     someobject = ABPropFile('abfile.cfg2')
     print(someobject.filename)
 

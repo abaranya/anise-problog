@@ -14,6 +14,11 @@ class InputProc:
                                     'named <filename>, if no filename given '
                                     'stdin input are used',
                                  metavar='<filename>')
+        self.parser.add_argument('-c', nargs='1', type=argparse.FileType('r'),
+                                 help='process cfg for input processing '
+                                    'named <config_file.cfg>',
+                                 metavar='<config_file.cfg>'
+                                 )
         return
 
     def parse(self, argv=sys.argv):
