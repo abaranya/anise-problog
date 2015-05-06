@@ -3,6 +3,7 @@ __email__ = 'abaranya@gmail.com'
 __username__ = 'abaranya'
 
 import configparser
+from fileparsing import abutil
 
 # this module provides generic file parsing capabilities
 # is intended for generic but personal use
@@ -18,10 +19,22 @@ class ABPropFile:
     def __init__(self, filename='abfile.cfg'):
         self.filename = filename
 
-    def getdefinition(self):
+    def __init__(self, fileobject):
+        self.filename = fileobject.name
+
+    def get_cfg_type_section(self):
+        """read [ABFile]section"""
+        if self.parser.has_section('ABFile'):
+            return self.parser.get('ABFile')
+        return None
+
+    def get_definition(self):
         """process & store configuration definition internally"""
-        # todo uncomment this self.parser.read(self.filename)
-        return "getting definition"
+        self.parser.read(self.filename)
+        abutil.debug("Secciones : " + self.parser.sections())
+        #  identify cfg type
+        absection = self.get_cfg_type_section()
+        return absection
 
     def parsebody(self):
         # todo do some actual body parsing
