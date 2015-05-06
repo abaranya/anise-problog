@@ -12,7 +12,12 @@ def main(argv):
 
     inputproc.printhelp()
 
-    someobject = ABPropFile('abfile.cfg2')
+    args = inputproc.parse(argv)
+
+    print(args.cfgfile[0].name)
+
+    someobject = ABPropFile(args.cfgfile[0].name)
+
     print(someobject.filename)
 
 # todo: do something with the input

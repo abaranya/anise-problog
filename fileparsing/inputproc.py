@@ -9,21 +9,25 @@ class InputProc:
     def __init__(self, desc):
         self.parser = argparse.ArgumentParser(description=desc)
         # configure the parser
-        self.parser.add_argument('-f', nargs='?', type=argparse.FileType('r'),
+        self.parser.add_argument('-f', nargs=1, type=argparse.FileType('r'),
                                  default=sys.stdin, help='process input file '
                                     'named <filename>, if no filename given '
                                     'stdin input are used',
-                                 metavar='<filename>')
-        self.parser.add_argument('-c', nargs='1', type=argparse.FileType('r'),
-                                 help='process cfg for input processing '
-                                    'named <config_file.cfg>',
-                                 metavar='<config_file.cfg>'
+                                 metavar='<filename>', dest='inputfile'
                                  )
+        self.parser.add_argument('-c', nargs=1, type=argparse.FileType('r'),
+                                 required=True, help='process configuration file'
+                                    'input named <config_file.cfg>',
+                                 metavar='<config_file.cfg>', dest='cfgfile'
+                                 )
+        self.parameters = None
         return
 
     def parse(self, argv=sys.argv):
         """process argv and store options"""
-        return
+        #args, unknow = self.parser.parse_args(argv, self.parameters)
+        args, unknow = self.parser.parse_known_args(argv, self.parameters)
+        return args
 
     def printhelp(self):
         """provide help string"""
