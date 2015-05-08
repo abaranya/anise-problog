@@ -16,7 +16,6 @@ ab_use_debug = True
 
 def debug(message):
     if ab_use_debug:
-        print("Debug_Message: ")
-        print(message)
+        print("Debug_Message: {}".format(message))
     return
 

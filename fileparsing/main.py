@@ -10,20 +10,25 @@ from fileparsing.inputproc import InputProc
 
 def read_file_by_cfg(input_file, cfg_file):
     """read input file using cfg definition"""
-    input_definition = ABPropFile(cfg_file)
+    property_file = ABPropFile(cfg_file)
+    cfg_definition = property_file.get_definition()
 
-    return []  # todo: update to proper return value
+    #  todo: delete this testing behavior
+    abutil.debug(cfg_definition)
+    #  todo: find proper way to test into de list for the value
+
+    return cfg_definition  # todo: check this
 
 
 def main(argv):
 
-    # todo: parse some input parameters
+    # parse some input parameters
     inputproc = InputProc('Parse Problog Output for centerline calculations')
     parsed_args = inputproc.parse(argv)
 
     abutil.debug(parsed_args.cfgfile[0].name)
 
-    # todo: do something with the input
+    # read input file based on
     records = read_file_by_cfg(parsed_args.inputfile[0], parsed_args.cfgfile[0])
 
     # todo: give some output
