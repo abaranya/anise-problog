@@ -12,7 +12,8 @@ from fileparsing import abutil
 ABFILE = 'ABFile'
 # Header Section
 HEADER = 'Header'
-
+# Record section
+RECORD = 'Record'
 
 class ABPropFile:
     """Handle generic config file for the parsing class"""
@@ -38,6 +39,11 @@ class ABPropFile:
         """Test if 'ABFile' is present"""
         return self.parser.has_section(ABFILE)
 
+    @property
+    def has_header(self):
+        """test if processing header is required"""
+        return (self.parser.get(HEADER, 'header') == 'True')
+
     def get_cfg_type_section(self):
         """read [ABFile] section"""
         if self.is_valid_abfile:
@@ -46,7 +52,6 @@ class ABPropFile:
 
     def get_definition(self):
         """process & store configuration definition internally"""
-        self.parser.read(self.filename)
         section_list = self.parser.sections()
         abutil.debug("Secciones : {}".format(section_list))
 
@@ -58,14 +63,41 @@ class ABPropFile:
 
         return absection
 
+    def get_record_definition(self):
+        """get definition for a record style cfg"""
+        return self.parser.items(RECORD)  # Set proper return value
+
     def parsebody(self):
         # todo do some actual body parsing
         return 'Body'
 
     def parseheader(self):
-        # todo do some header parsing
-        return 'Header'
+        # check if file requires header processing
+        if not self.has_header:
+            return None
+
+        # todo process header section
+        return None
 
     def parse(self):
-        # todo how about return the body and the header
-        return {self.parseheader(), self.parsebody()}
+        """"process cfg file definition"""
+        # read the file and paser the structure
+        self.parser.read(self.filename)
+
+        if not self.is_valid_abfile:
+            return {None, None}
+
+        # get general cfg definition
+        cfg_definition = self.get_definition()
+
+        #  todo: delete this testing behavior
+        abutil.debug("cfg definition is --{}--".format(cfg_definition))
+
+        #  verify record style input file
+        (prop, value) = next(((a, b) for (a, b) in cfg_definition if a == 'style'
+                              ), (None, None)
+                             )
+        if not value == 'record':  # should check text and single conditions
+            return {None, None}
+
+        return {self.parseheader(), self.parsebody(value)}

@@ -10,14 +10,19 @@ from fileparsing.inputproc import InputProc
 
 def read_file_by_cfg(input_file, cfg_file):
     """read input file using cfg definition"""
+
+    #  process configuration file definition
     property_file = ABPropFile(cfg_file)
-    cfg_definition = property_file.get_definition()
 
-    #  todo: delete this testing behavior
-    abutil.debug(cfg_definition)
-    #  todo: find proper way to test into de list for the value
+    if not property_file.parse():
+        return None
 
-    return cfg_definition  # todo: check this
+    # get the record spec
+    record_definition = property_file.get_record_definition()
+
+    # todo: add file processing using record definition
+
+    return record_definition  # todo: check this
 
 
 def main(argv):
