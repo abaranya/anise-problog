@@ -14,6 +14,9 @@ ABFILE = 'ABFile'
 HEADER = 'Header'
 # Record section
 RECORD = 'Record'
+# Field section
+FIELDS = 'Fields'
+
 
 class ABPropFile:
     """Handle generic config file for the parsing class"""
@@ -42,7 +45,7 @@ class ABPropFile:
     @property
     def has_header(self):
         """test if processing header is required"""
-        return (self.parser.get(HEADER, 'header') == 'True')
+        return self.parser.get(HEADER, 'header') == 'True'
 
     def get_cfg_type_section(self):
         """read [ABFile] section"""
@@ -67,11 +70,17 @@ class ABPropFile:
         """get definition for a record style cfg"""
         return self.parser.items(RECORD)  # Set proper return value
 
-    def parsebody(self):
-        # todo do some actual body parsing
-        return 'Body'
+    def get_record_fields(self):
+        """get field list"""
+        return self.parser.items(FIELDS)
 
-    def parseheader(self):
+    def parse_records(self):
+        """parse Record section"""
+        record_definition = self.get_record_definition()
+        record_fields = self.get_record_fields()
+        return [record_definition, record_fields]
+
+    def parse_header(self):
         # check if file requires header processing
         if not self.has_header:
             return None
@@ -94,10 +103,11 @@ class ABPropFile:
         abutil.debug("cfg definition is --{}--".format(cfg_definition))
 
         #  verify record style input file
-        (prop, value) = next(((a, b) for (a, b) in cfg_definition if a == 'style'
-                              ), (None, None)
+        (prop, value) = next(((a, b) for (a, b) in
+                              cfg_definition if a == 'style'), (None, None)
                              )
-        if not value == 'record':  # should check text and single conditions
-            return {None, None}
 
-        return {self.parseheader(), self.parsebody(value)}
+        if not value == 'record':  # should check text and single conditions
+            return {None, None}  # Only knows how to parse record style ATM
+
+        return self.parse_header(), self.parse_records()

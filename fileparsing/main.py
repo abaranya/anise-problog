@@ -14,11 +14,10 @@ def read_file_by_cfg(input_file, cfg_file):
     #  process configuration file definition
     property_file = ABPropFile(cfg_file)
 
-    if not property_file.parse():
-        return None
+    (header_definition, record_definition) = property_file.parse()
 
     # get the record spec
-    record_definition = property_file.get_record_definition()
+    # record_definition = property_file.get_record_spec()
 
     # todo: add file processing using record definition
 
