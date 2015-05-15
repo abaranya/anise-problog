@@ -6,7 +6,7 @@ import sys
 from fileparsing import abutil
 from fileparsing.abfile import ABPropFile
 from fileparsing.inputproc import InputProc
-
+from fileparsing.probfile import ProbFile
 
 def read_file_by_cfg(input_file, cfg_file):
     """read input file using cfg definition"""
@@ -18,6 +18,9 @@ def read_file_by_cfg(input_file, cfg_file):
 
     # get the record spec
     # record_definition = property_file.get_record_spec()
+
+    prob_file = ProbFile(record_definition)
+    prob_file.set_filename(input_file)
 
     # todo: add file processing using record definition
 

@@ -3,7 +3,7 @@ __email__ = 'abaranya@gmail.com'
 __username__ = 'abaranya'
 
 #  this module provides problog output parsing capabilities
-from fileparsing.abfile import ABPropFile
+#  from fileparsing.abfile import ABPropFile
 
 
 class ProbFile:
