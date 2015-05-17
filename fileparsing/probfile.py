@@ -4,55 +4,63 @@ __username__ = 'abaranya'
 
 #  this module provides problog output parsing capabilities
 #  from fileparsing.abfile import ABPropFile
-
+import re
+from fileparsing import abutil
 
 class ProbFile:
     """"Wrapper for a problog output file"""
     _specs = None
     _filename = None
+    _file = None
 
     def __init__(self, specs):
         super().__init__()
         self._specs = specs
 
+    def set_file(self, file):
+        self._file = file
+        self.set_filename(file.name)
+
     def set_filename(self, filename):
         self._filename = filename
 
     def get_filename(self):
-        return self.filename
+        return self._filename
 
-    def read_next_line(self, file):
-        #  todo: add use cases for different endline chars
+    @staticmethod
+    def parse_regexp(regexp, record):
+        """parse the record to match the regexp"""
+        return re.search(regexp, record).groupdict()
 
-        return line
-
-    def read_records(self,file):
+    def read_records(self, file):
         #  check endline params
-        if not self._specs[0].byline:
-            #  todo: implement different endline char behavior
-            return []
-        records = []
 
-        for line in file:
-            records.append(read_next_line(file))
+        md = dict(self._specs[0])
+
+        if not md.get('byline'):
+            #  todo: implement different record selectors
+            #  only parsing records by line atm
+            return []
 
         values = []
 
-        if self._specs[0].format == 'regexp':
-            values = parse_regexp(self._specs[0].regexp, records)
+        for line in file:
+            if md.get('format') == 'regexp':
+                values.append(self.parse_regexp(md.get('regexp'), line))
 
-        return values  # todo: add proper behaviour
+        return values
 
     def read_file(self):
-        if self.filename is not None:
+        if not self._file.closed:
             try:
-                record_list = []
+                record_list = self.read_records(self._file)
 
-                with open(self.filename) as file:
-                    record_list.append(self.read_records(file))
+                return record_list
 
-            except (IOError, OSError, Failure) as e:
-                debug("An terrible exception occurred")
-
-            return record_list
+            except (IOError, OSError) as e:
+                abutil.debug("Some IO Exception occurred")
+            except Exception as e:
+                abutil.debug("A terrible Exception occurred:{} using {}".format(
+                    type(e).__name__, e.args))
+                raise e
         return []
